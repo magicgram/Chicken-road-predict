@@ -156,8 +156,8 @@ const PredictorPage: React.FC<PredictorPageProps> = ({ user, onUpdateUser }) => 
                     <div className="wall-vent" style={{ left: '35%' }}></div>
                     <div className="wall-vent" style={{ right: '15%' }}></div>
                     <div className="doorway"></div>
-                    <div className="multiplier-orb" style={{ left: '30%', top: '35%' }}>1.03x</div>
-                    <div className="multiplier-orb" style={{ right: '10%', top: '40%' }}>1.07x</div>
+                    <div className="multiplier-orb" style={{ left: '30%', bottom: 'calc(12vh + 40px)' }}>1.03x</div>
+                    <div className="multiplier-orb" style={{ right: '10%', bottom: 'calc(12vh + 80px)' }}>1.07x</div>
                 </div>
                 <div className="floor"></div>
 
