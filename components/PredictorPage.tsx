@@ -156,6 +156,13 @@ const PredictorPage: React.FC<PredictorPageProps> = ({ user, onUpdateUser }) => 
                     <div className="wall-vent" style={{ left: '35%' }}></div>
                     <div className="wall-vent" style={{ right: '15%' }}></div>
                     <div className="doorway"></div>
+                    {/* --- MULTIPLIER CIRCLES --- */}
+                    <div className="multiplier-circle" style={{ top: '25%', left: 'calc(50% + 40px)', width: '120px', height: '120px', fontSize: '1.8rem' }}>
+                        1.03x
+                    </div>
+                    <div className="multiplier-circle" style={{ top: '28%', left: 'calc(50% + 220px)', width: '110px', height: '110px', fontSize: '1.7rem' }}>
+                        1.07x
+                    </div>
                 </div>
                 <div className="floor"></div>
 
@@ -176,7 +183,8 @@ const PredictorPage: React.FC<PredictorPageProps> = ({ user, onUpdateUser }) => 
                         <div className="panel-item">Steps -</div>
                     </div>
                     <div className="panel-row">
-                        <div className="panel-item full-width">Cashout before this value 👉</div>
+                        <div className="panel-item full-width" style={{flexGrow: 2.5}}>Cashout before this value 👉</div>
+                        <div className="panel-item" style={{flexGrow: 1.5}}></div>
                     </div>
                     <div className="panel-row">
                         <div className="relative w-full" ref={dropdownRef}>
