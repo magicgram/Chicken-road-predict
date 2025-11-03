@@ -157,10 +157,10 @@ const PredictorPage: React.FC<PredictorPageProps> = ({ user, onUpdateUser }) => 
                     <div className="wall-vent" style={{ right: '15%' }}></div>
                     <div className="doorway"></div>
                     {/* --- MULTIPLIER CIRCLES --- */}
-                    <div className="multiplier-circle" style={{ top: '25%', left: 'calc(50% + 40px)', width: '120px', height: '120px', fontSize: '1.8rem' }}>
+                    <div className="multiplier-circle" style={{ top: '25%', left: 'calc(50% + 50px)' }}>
                         1.03x
                     </div>
-                    <div className="multiplier-circle" style={{ top: '28%', left: 'calc(50% + 220px)', width: '110px', height: '110px', fontSize: '1.7rem' }}>
+                    <div className="multiplier-circle" style={{ top: '28%', left: 'calc(50% + 180px)' }}>
                         1.07x
                     </div>
                 </div>
