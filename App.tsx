@@ -280,11 +280,28 @@ const AppContent: React.FC = () => {
             
             <header className="absolute top-0 left-0 right-0 p-4 flex justify-between items-center text-white z-20">
                 {isPredictorPageActive && user ? (
-                     <h1 className="font-bold text-lg" style={{textShadow: '1px 1px 3px rgba(0,0,0,0.5)'}}>{t('predictor.welcome')} - {user.id}</h1>
+                    <div className="text-shadow-lg">
+                        <h1 className="font-bold text-lg sm:text-xl flex items-center gap-2 font-['Orbitron'] tracking-wider" style={{textShadow: '2px 2px 4px rgba(0,0,0,0.7)'}}>
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" className="h-7 w-7">
+                                <defs>
+                                    <linearGradient id="egg-grad" x1="0%" y1="0%" x2="0%" y2="100%">
+                                        <stop offset="0%" stopColor="#fef08a" />
+                                        <stop offset="100%" stopColor="#facc15" />
+                                    </linearGradient>
+                                </defs>
+                                <path fill="url(#egg-grad)" d="M12,2C8.43,2,5.5,5.13,5.5,9.15c0,4.02,2.93,7.15,6.5,7.15s6.5-3.13,6.5-7.15C18.5,5.13,15.57,2,12,2z" />
+                            </svg>
+                            <span>CHICKEN ROAD PREDICTOR</span>
+                        </h1>
+                        <div className="text-xs text-gray-300 ml-1 mt-1 flex items-center gap-4">
+                            <span><span className="inline-block w-2 h-2 bg-green-500 rounded-full mr-1.5 animate-pulse"></span>Live wins</span>
+                            <span>Players I'd: <span className="font-bold">{user.id}</span></span>
+                        </div>
+                    </div>
                 ) : (
                     <div /> // Placeholder to keep the menu button on the right
                 )}
-                <div className="flex items-center gap-4">
+                <div className="flex items-center gap-2 sm:gap-4">
                     {isPredictorPageActive && (
                         <button 
                             onClick={() => { playSound('buttonClick'); toggleMute(); }}

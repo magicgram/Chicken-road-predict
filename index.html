@@ -59,12 +59,8 @@
             to { transform: skewX(-25deg) translateX(150%); }
         }
 
-        /* --- NEW GAME THEME STYLES --- */
+        /* --- GENERAL STYLES --- */
         :root {
-            --sky-top: #65b2e8;
-            --sky-bottom: #a2d2f3;
-            --road-color: #6c6c6c; /* Asphalt */
-            --sidewalk-color: #4a4a4a;
             --wood-bg: #8c5a3a;
             --wood-border: #593a24;
             --text-on-wood: #ffffff;
@@ -77,14 +73,13 @@
             font-family: 'Inter', sans-serif;
             color: var(--text-dark);
             overflow-x: hidden;
-            background: linear-gradient(to bottom, var(--sky-top), var(--sky-bottom) 75vh, var(--road-color) 75vh, var(--road-color) 100vh);
+            background: linear-gradient(to bottom, #65b2e8, #a2d2f3 75vh, #6c6c6c 75vh, #6c6c6c 100vh);
             background-attachment: fixed;
             display: flex;
             flex-direction: column;
             min-height: 100vh;
         }
 
-        /* Container to center content on non-predictor pages */
         .page-container {
             flex-grow: 1;
             display: flex;
@@ -216,214 +211,161 @@
         .form-input::placeholder { color: rgba(255,255,255,0.5); }
         .form-input:focus { outline: none; border-color: var(--yellow-accent); background-color: rgba(0,0,0,0.3); }
 
-        /* --- PREDICTOR PAGE (GAME MODE) STYLES --- */
-        body.game-mode { padding: 0 !important; background: none; }
+        /* --- NEW GAME THEME (CHICKEN ROAD) --- */
+        body.game-mode {
+            padding: 0 !important;
+            background-color: #2c325c;
+            background-image: radial-gradient(circle at top left, rgba(88, 98, 150, 0.3) 0%, transparent 40%),
+                              radial-gradient(circle at bottom right, rgba(44, 49, 85, 0.4) 0%, transparent 50%);
+            overflow: hidden;
+            background-attachment: fixed;
+        }
 
-        .game-container {
+        .game-container-dark {
             width: 100%;
             height: 100vh;
             overflow: hidden;
             position: relative;
-            background: linear-gradient(to bottom, var(--sky-top), var(--sky-bottom));
-        }
-
-        .clouds {
-            position: absolute;
-            top: 0; left: 0; right: 0;
-            height: 50vh;
-            background:
-                radial-gradient(circle at 20% 30%, rgba(255,255,255,0.8) 0%, rgba(255,255,255,0) 40%),
-                radial-gradient(circle at 80% 40%, rgba(255,255,255,0.7) 0%, rgba(255,255,255,0) 50%),
-                radial-gradient(circle at 50% 80%, rgba(245,245,255,0.6) 0%, rgba(245,245,255,0) 60%);
-            background-repeat: no-repeat;
-            background-size: 80% 80%, 90% 90%, 100% 100%;
-            opacity: 0.9;
-            filter: blur(25px);
-            animation: move-clouds 80s linear infinite;
-        }
-
-        @keyframes move-clouds {
-            from { background-position: -80% 5%, -60% 20%, -70% 0; }
-            to { background-position: 180% 5%, 160% 20%, 170% 0; }
-        }
-
-        .wall {
-            position: absolute;
-            bottom: 30vh;
-            left: 0; right: 0;
-            height: 20vh;
-            background-color: #c26a57;
-            background-image:
-                linear-gradient(335deg, #b25846 23px, transparent 23px),
-                linear-gradient(155deg, #b25846 23px, transparent 23px),
-                linear-gradient(335deg, #b25846 23px, transparent 23px),
-                linear-gradient(155deg, #b25846 23px, transparent 23px);
-            background-size: 58px 58px;
-            background-position: 0px 2px, 4px 35px, 29px 31px, 34px 6px;
-            border-top: 6px solid #8c4a3a;
-            border-bottom: 4px solid #593a24;
-        }
-        
-        .sidewalk {
-            position: absolute;
-            bottom: 25vh;
-            left: 0; right: 0;
-            height: 5vh;
-            background: #4a4a4a;
-            display: flex;
-            align-items: center;
-            justify-content: space-around;
-            padding: 0 10vw;
-            box-sizing: border-box;
-            border-top: 2px solid #333;
-            border-bottom: 2px solid #666;
-            z-index: 2;
-        }
-
-        .road {
-            position: absolute;
-            bottom: 0; left: 0; right: 0;
-            height: 25vh;
-            background: var(--road-color);
-            border-top: 10px solid #a0a0a0;
-            overflow: hidden;
-        }
-        
-        .road::before {
-            content: '';
-            position: absolute;
-            top: -9px;
-            left: 0;
-            width: 100%;
-            height: 8px;
-            background: repeating-linear-gradient( 45deg, #f1c40f, #f1c40f 20px, #dcdcdc 20px, #dcdcdc 40px );
-        }
-
-        .manhole {
-            width: 4.5vh;
-            height: 4.5vh;
-            background: #3d3d3d;
-            border-radius: 50%;
-            border: 2px solid #2e2e2e;
-            box-shadow: inset 0 2px 4px rgba(0,0,0,0.6);
-            position: relative;
-            background-image: radial-gradient(rgba(20,20,20,0.7) 15%, transparent 16%), radial-gradient(rgba(20,20,20,0.7) 15%, transparent 16%);
-            background-size: 1vh 1vh;
-            background-position: 0 0, 0.5vh 0.5vh;
-            background-repeat: round;
-        }
-
-        .road-signs {
-            position: absolute;
-            bottom: 30vh;
-            display: flex;
-            align-items: flex-end;
-            gap: 4vw;
-            left: 5vw;
-            width: 90vw;
-            z-index: 1;
-        }
-
-        .sign {
-            position: relative;
             display: flex;
             flex-direction: column;
-            align-items: center;
         }
-        .sign::after { /* The pole */
-            content: '';
-            width: 10px;
-            height: 18vh;
-            background: linear-gradient(#b0b0b0, #8d8d8d);
-            display: block;
-            border-radius: 2px;
-            box-shadow: 1px 1px 3px rgba(0,0,0,0.4);
+
+        .game-scenery {
+            flex-grow: 1;
+            position: relative;
         }
-        .sign-face {
-            color: #2c3e50;
-            font-weight: 700;
-            font-family: 'Orbitron', sans-serif;
+
+        .wall-background {
+            position: absolute;
+            inset: 0;
+            background-color: #212640;
+        }
+        
+        .floor {
+            position: absolute;
+            bottom: 0;
+            left: 0; right: 0;
+            height: 35vh;
+            background: #3a416f;
+            border-top: 10px solid #141726;
+        }
+
+        .doorway {
+            position: absolute;
+            bottom: 35vh;
+            left: clamp(-20px, 5vw, 40px);
+            width: 140px;
+            height: 180px;
+            background: #141726;
+            border-radius: 70px 70px 0 0;
+        }
+
+        .multiplier-orb {
+            position: absolute;
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background: radial-gradient(circle, #4a5288, #323864);
+            border: 5px solid #5a63a5;
             display: flex;
             align-items: center;
             justify-content: center;
-            filter: drop-shadow(3px 3px 5px rgba(0,0,0,0.4));
-        }
-        .yellow-sign .sign-face {
-            width: 14vh;
-            height: 14vh;
-            background: #f1c40f;
-            clip-path: polygon(50% 0%, 5% 100%, 95% 100%);
-            border: 8px solid #a0a0a0;
-            box-sizing: content-box;
-            border-radius: 5px;
-            flex-direction: column;
-            padding-bottom: 1vh;
-        }
-        .yellow-sign .sign-face span {
-            font-size: 2.8vh;
-            font-weight: 900;
-            color: black;
-            text-shadow: 1px 1px 0px rgba(0,0,0,0.2);
-        }
-
-        .grey-sign .sign-face {
-            width: 12vh;
-            height: 12vh;
-            background: #4a4a4a;
-            border: 10px solid #a0a0a0;
-            border-radius: 50%;
-            font-size: 2.4vh;
-            color: white;
-            text-shadow: 1px 1px 2px black;
-            position: relative;
-        }
-        
-        .sign-screw {
-            position: absolute;
-            width: 8px; height: 8px;
-            background: #777;
-            border-radius: 50%;
-            border: 1px solid #555;
-            box-shadow: inset 0 0 2px rgba(0,0,0,0.5);
+            color: #a7b3ff;
+            font-size: 1.8rem;
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 700;
+            box-shadow: inset 0 0 15px rgba(0,0,0,0.5), 0 0 20px rgba(90, 99, 165, 0.3);
+            text-shadow: 0 0 10px #a7b3ff;
         }
 
         .chicken {
             position: absolute;
-            bottom: 25vh;
-            left: -150px;
-            width: 100px;
-            height: 100px;
+            bottom: calc(35vh - 10px);
+            left: clamp(-20px, 5vw, 40px);
+            width: 120px;
+            height: 120px;
             z-index: 5;
-        }
-        .chicken.running {
-            animation: chicken-run 3s linear forwards;
+            transform: translateX(10px);
         }
         
-        .game-footer {
-            position: absolute;
-            bottom: 0; left: 0; right: 0;
-            padding: 1.5rem;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 1rem;
-            z-index: 10;
+        @keyframes fast-chicken-run {
+            from { transform: translateX(10px); }
+            to { transform: translateX(110vw); }
         }
 
-        .prediction-placeholder {
+        .chicken.running {
+            animation: fast-chicken-run 1s cubic-bezier(0.5, 0, 0.75, 0) forwards;
+        }
+        
+        .game-footer-dark {
+            position: absolute;
+            bottom: 0; left: 0; right: 0;
+            z-index: 10;
+            padding: 0 1rem;
+        }
+
+        .control-panel {
             width: 100%;
-            max-width: 400px;
-            padding: 0.8rem;
-            background: linear-gradient(to bottom, #6a7f9a, #4e6079);
-            border-radius: 1rem;
-            border: 3px solid #3d4a5e;
-            box-shadow: inset 0 3px 6px rgba(0,0,0,0.4), 0 2px 4px rgba(0,0,0,0.3);
-            color: white;
-            font-size: 3.5rem;
-            font-weight: 700;
+            max-width: 450px;
+            margin: 0 auto;
+            background: #232743;
+            border-radius: 1.5rem 1.5rem 0 0;
+            padding: 1rem;
+            border: 3px solid #4a5288;
+            border-bottom: none;
+            box-shadow: 0 -5px 20px rgba(0,0,0,0.3);
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .panel-row { display: flex; gap: 0.75rem; }
+
+        .panel-item {
+            background: #3a416f;
+            border-radius: 0.5rem;
+            padding: 0.6rem 1rem;
+            color: #a7b3ff;
+            font-weight: 600;
+            flex-grow: 1;
             text-align: center;
-            font-family: 'Orbitron', sans-serif;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.4);
+            position: relative;
+            font-size: 0.9rem;
+        }
+        .panel-item.dropdown::after {
+            content: '▼';
+            position: absolute;
+            right: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 0.7rem;
+            opacity: 0.7;
+        }
+        .panel-item.full-width { text-align: left; }
+
+        .btn-get-signal {
+            width: 100%;
+            padding: 1rem;
+            background: linear-gradient(to bottom, #4ade80, #16a34a);
+            color: white;
+            font-size: 1.5rem;
+            font-weight: 900;
+            border: none;
+            border-radius: 1rem;
+            box-shadow: 0 6px 0 #14532d, 0 8px 10px rgba(0,0,0,0.3);
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.4);
+            transition: all 0.1s ease;
+            margin-top: 0.5rem;
+        }
+        .btn-get-signal:active:not(:disabled) {
+            transform: translateY(4px);
+            box-shadow: 0 2px 0 #14532d;
+        }
+        .btn-get-signal:disabled {
+            filter: grayscale(0.7);
+            cursor: not-allowed;
+            opacity: 0.7;
         }
 
         .action-button {
@@ -452,25 +394,37 @@
             opacity: 0.7;
         }
 
-        .btn-screw {
-            position: absolute;
-            width: 18px; height: 18px;
-            background: #a0a0a0;
-            border-radius: 50%;
-            border: 1px solid #777;
-            box-shadow: inset 0 1px 2px rgba(0,0,0,0.5);
-            display: flex;
-            align-items: center;
-            justify-content: center;
+        /* --- Result Modal Overrides --- */
+        .result-modal.result-modal-dark {
+            background: #232743;
+            border: 3px solid #4a5288;
+            border-radius: 1.5rem;
+            padding: 2rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
         }
-        .btn-screw::after {
-            content: '+';
-            font-size: 14px;
-            font-weight: bold;
-            color: #555;
-            transform: rotate(45deg);
+        .result-modal-dark .result-coin {
+            background: radial-gradient(circle, #8f9dff, #5a63a5, #3a416f);
+            border-color: #a7b3ff;
+            color: white;
+            text-shadow: 0 0 10px black;
+            font-size: 2.5rem;
+            width: 180px;
+            height: 180px;
         }
-
+        .result-modal-dark .result-info {
+             background: #3a416f;
+             border: 2px solid #5a63a5;
+        }
+        .result-modal-dark .action-button {
+            background: linear-gradient(to bottom, #4a5288, #323864);
+            color: white;
+            box-shadow: 0 6px 0 #141726;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.4);
+        }
+        .result-modal-dark .action-button:active {
+            box-shadow: 0 2px 0 #141726;
+        }
+        
         .result-overlay {
             position: fixed;
             inset: 0;
@@ -528,7 +482,7 @@
             align-items: center;
             justify-content: center;
             border-radius: 50%;
-            background-color: black;
+            background-color: rgba(0,0,0,0.4);
             transition: transform 0.2s;
             position: relative;
             overflow: hidden;
