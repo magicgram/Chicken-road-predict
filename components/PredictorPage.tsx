@@ -152,9 +152,12 @@ const PredictorPage: React.FC<PredictorPageProps> = ({ user, onUpdateUser }) => 
         <div className="game-container-dark">
             <div className="game-scenery">
                 <div className="wall-background">
+                    <div className="vertical-dashed-line"></div>
+                    <div className="wall-vent" style={{ left: '35%' }}></div>
+                    <div className="wall-vent" style={{ right: '15%' }}></div>
                     <div className="doorway"></div>
-                    <div className="multiplier-orb" style={{ left: '55%', top: '20%', transform: 'scale(0.8)' }}>1.03x</div>
-                    <div className="multiplier-orb" style={{ left: '78%', top: '25%', transform: 'scale(0.9)' }}>1.07x</div>
+                    <div className="multiplier-orb" style={{ left: '30%', top: '35%' }}>1.03x</div>
+                    <div className="multiplier-orb" style={{ right: '10%', top: '40%' }}>1.07x</div>
                 </div>
                 <div className="floor"></div>
 

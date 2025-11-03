@@ -240,21 +240,55 @@
         .wall-background {
             position: absolute;
             inset: 0;
-            background-color: #212640;
+            background-color: #2c325c;
+            background-image: 
+                radial-gradient(ellipse at 80% 20%, rgba(68, 73, 107, 0.3), transparent 50%),
+                radial-gradient(ellipse at 10% 90%, rgba(20, 23, 38, 0.4), transparent 50%);
         }
         
+        .vertical-dashed-line {
+            position: absolute;
+            left: 50%;
+            top: 0;
+            bottom: 25vh; /* Match floor height */
+            width: 2px;
+            background-image: linear-gradient(to bottom, #141726 60%, transparent 40%);
+            background-size: 2px 20px;
+            transform: translateX(-50%);
+        }
+
+        .wall-vent {
+            position: absolute;
+            bottom: calc(25vh + 20px);
+            width: 80px;
+            height: 40px;
+            background: #141726;
+            border-radius: 8px;
+            display: flex;
+            justify-content: space-evenly;
+            align-items: center;
+            padding: 0 10px;
+        }
+
+        .wall-vent::before { /* The grill bars */
+            content: '';
+            width: 100%;
+            height: 20px;
+            background-image: repeating-linear-gradient(to right, #3a416f, #3a416f 4px, transparent 4px, transparent 8px);
+        }
+
         .floor {
             position: absolute;
             bottom: 0;
             left: 0; right: 0;
-            height: 25vh; /* Reduced height to give more space for controls */
+            height: 25vh;
             background: #3a416f;
             border-top: 10px solid #141726;
         }
 
         .doorway {
             position: absolute;
-            bottom: 25vh; /* Matched to new floor height */
+            bottom: 25vh;
             left: clamp(-20px, 5vw, 40px);
             width: 140px;
             height: 180px;
@@ -282,7 +316,7 @@
 
         .chicken {
             position: absolute;
-            bottom: calc(25vh - 10px); /* Matched to new floor height */
+            bottom: calc(25vh - 10px);
             left: clamp(-20px, 5vw, 40px);
             width: 100px;
             height: 100px;
@@ -308,50 +342,50 @@
             width: 100%;
             max-width: 450px;
             margin: 0 auto;
-            background: #232743;
+            background: #2d314d;
             border-radius: 1.5rem 1.5rem 0 0;
-            padding: 0.5rem 1rem; /* Reduced vertical padding */
+            padding: 1rem;
             border: 3px solid #4a5288;
             border-bottom: none;
             box-shadow: 0 -5px 20px rgba(0,0,0,0.3);
             display: flex;
             flex-direction: column;
-            gap: 0.25rem; /* Reduced gap */
+            gap: 0.75rem;
         }
 
         .panel-row { display: flex; gap: 0.75rem; }
 
         .panel-item {
-            background: #3a416f;
+            background: #44496b;
             border-radius: 0.5rem;
-            padding: 0.4rem 0.75rem; /* Reduced padding */
-            color: #a7b3ff;
-            font-weight: 600;
+            padding: 0.75rem 1rem;
+            color: #e0e7ff;
+            font-weight: 700;
             flex-grow: 1;
             text-align: center;
             box-shadow: inset 0 2px 4px rgba(0,0,0,0.4);
             position: relative;
-            font-size: 0.8rem; /* Reduced font size */
+            font-size: 0.9rem;
         }
         .panel-item.full-width { text-align: left; }
 
         .btn-get-signal {
             width: 100%;
-            padding: 0.6rem; /* Reduced padding */
-            background: linear-gradient(to bottom, #4ade80, #16a34a);
+            padding: 1rem;
+            background: linear-gradient(to bottom, #34d399, #10b981);
             color: white;
-            font-size: 1.1rem; /* Reduced font size */
+            font-size: 1.25rem;
             font-weight: 900;
             border: none;
-            border-radius: 1rem;
-            box-shadow: 0 4px 0 #14532d, 0 8px 10px rgba(0,0,0,0.3); /* Reduced shadow height */
+            border-radius: 0.75rem;
+            box-shadow: 0 5px 0 #059669, 0 8px 10px rgba(0,0,0,0.3);
             text-shadow: 1px 1px 2px rgba(0,0,0,0.4);
             transition: all 0.1s ease;
-            margin-top: 0.25rem; /* Reduced margin */
+            margin-top: 0.5rem;
         }
         .btn-get-signal:active:not(:disabled) {
-            transform: translateY(2px); /* Adjusted for new shadow */
-            box-shadow: 0 2px 0 #14532d;
+            transform: translateY(3px);
+            box-shadow: 0 2px 0 #059669;
         }
         .btn-get-signal:disabled {
             filter: grayscale(0.7);
