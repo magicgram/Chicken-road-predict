@@ -333,15 +333,6 @@
             position: relative;
             font-size: 0.9rem;
         }
-        .panel-item.dropdown::after {
-            content: '▼';
-            position: absolute;
-            right: 1rem;
-            top: 50%;
-            transform: translateY(-50%);
-            font-size: 0.7rem;
-            opacity: 0.7;
-        }
         .panel-item.full-width { text-align: left; }
 
         .btn-get-signal {
@@ -392,6 +383,58 @@
             filter: grayscale(0.7);
             cursor: not-allowed;
             opacity: 0.7;
+        }
+
+        /* --- Dropdown Styles --- */
+        .dropdown-menu {
+            position: absolute;
+            bottom: calc(100% + 0.5rem); /* Position above the button with some space */
+            left: 0;
+            right: 0;
+            background: #232743; /* Darker panel background color */
+            border: 3px solid #4a5288;
+            border-radius: 0.75rem;
+            z-index: 20;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            animation: dropdown-open 0.2s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+            transform-origin: bottom;
+            box-shadow: 0 -5px 20px rgba(0,0,0,0.3);
+        }
+
+        @keyframes dropdown-open {
+            from {
+                opacity: 0;
+                transform: scaleY(0.8) translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: scaleY(1) translateY(0);
+            }
+        }
+
+        .dropdown-item {
+            padding: 0.75rem 1.25rem;
+            color: #a7b3ff;
+            font-weight: 600;
+            text-align: left;
+            transition: background-color 0.2s ease;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border: none;
+            background: transparent;
+            width: 100%;
+            cursor: pointer;
+        }
+
+        .dropdown-item:hover {
+            background-color: #3a416f; /* Lighter panel item color */
+        }
+
+        .dropdown-item:not(:last-child) {
+            border-bottom: 1px solid #4a5288;
         }
 
         /* --- Result Modal Overrides --- */

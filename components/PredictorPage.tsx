@@ -27,11 +27,16 @@ const PredictorPage: React.FC<PredictorPageProps> = ({ user, onUpdateUser }) => 
     const [prediction, setPrediction] = useState<{ value: string; accuracy: number } | null>(null);
     const [showResult, setShowResult] = useState(false);
     const [lastPredictionValue, setLastPredictionValue] = useState<string | null>(null);
-
+    const [difficulty, setDifficulty] = useState('Easy');
+    const [isDifficultyOpen, setIsDifficultyOpen] = useState(false);
+    
+    const dropdownRef = useRef<HTMLDivElement>(null);
     const chickenRef = useRef<HTMLDivElement>(null);
+    // Fix: Destructure formatCurrency from useTranslations to make it available in the component.
     const { t, formatCurrency } = useTranslations();
     const { playSound } = useSound();
 
+    const difficulties = ['Easy', 'Medium', 'Hard', 'Hardcore'];
     const predictionsUsed = user.predictionCount;
     const predictionsLeft = PREDICTION_LIMIT - predictionsUsed;
 
@@ -47,6 +52,18 @@ const PredictorPage: React.FC<PredictorPageProps> = ({ user, onUpdateUser }) => 
             playSound('predictionReveal');
         }
     }, [showResult, prediction, playSound]);
+
+    useEffect(() => {
+        const handleClickOutside = (event: MouseEvent) => {
+            if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+                setIsDifficultyOpen(false);
+            }
+        };
+        document.addEventListener('mousedown', handleClickOutside);
+        return () => {
+            document.removeEventListener('mousedown', handleClickOutside);
+        };
+    }, []);
 
     const handleGetSignal = () => {
         if (predictionsLeft <= 0 || user.awaitingDeposit || isGenerating || showResult) {
@@ -161,7 +178,44 @@ const PredictorPage: React.FC<PredictorPageProps> = ({ user, onUpdateUser }) => 
                         <div className="panel-item full-width">Cashout before this value 👉</div>
                     </div>
                     <div className="panel-row">
-                        <div className="panel-item dropdown">Easy</div>
+                        <div className="relative w-full" ref={dropdownRef}>
+                             {isDifficultyOpen && (
+                                <div className="dropdown-menu">
+                                    {difficulties.map((d) => (
+                                        <button
+                                            key={d}
+                                            onClick={() => {
+                                                setDifficulty(d);
+                                                setIsDifficultyOpen(false);
+                                                playSound('buttonClick');
+                                            }}
+                                            className="dropdown-item"
+                                        >
+                                            <span>{d}</span>
+                                            {difficulty === d && (
+                                                <svg className="h-5 w-5 text-yellow-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                                    <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                                                </svg>
+                                            )}
+                                        </button>
+                                    ))}
+                                </div>
+                            )}
+                            <button
+                                onClick={() => {
+                                    setIsDifficultyOpen((prev) => !prev);
+                                    playSound('buttonClick');
+                                }}
+                                className="panel-item w-full flex justify-between items-center"
+                                aria-haspopup="true"
+                                aria-expanded={isDifficultyOpen}
+                            >
+                                <span>{difficulty}</span>
+                                <svg className={`h-5 w-5 transform transition-transform duration-200 ${isDifficultyOpen ? 'rotate-180' : ''}`} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={3} stroke="currentColor" >
+                                    <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
+                                </svg>
+                            </button>
+                        </div>
                     </div>
                     <button 
                         onClick={handleGetSignal}
