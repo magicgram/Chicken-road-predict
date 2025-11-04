@@ -1,5 +1,3 @@
-
-
 import React, { useState, useEffect, useRef } from 'react';
 import type { User } from '../types';
 import { useTranslations } from '../hooks/useTranslations';
@@ -15,6 +13,14 @@ const AFFILIATE_LINK = import.meta.env.VITE_AFFILIATE_LINK || 'https://1waff.com
 const COMMON_MULTIPLIERS = ["1.20x", "1.44x", "1.72x", "2.06x", "2.47x"];
 const RARE_MULTIPLIERS = ["2.96x", "3.55x", "4.26x", "5.11x"];
 const RARE_CHANCE = 1 / 15; // Approx 1 in 15 will be rare
+
+// --- Decorative Multiplier Values based on Difficulty ---
+const difficultyMultipliers: { [key: string]: string[] } = {
+    Easy: ['1.03X', '1.07X'],
+    Medium: ['1.12X', '1.28X'],
+    Hard: ['1.23X', '1.55X'],
+    Hardcore: ['1.63X', '2.80X'],
+};
 
 // --- Component Props Interface ---
 interface PredictorPageProps {
@@ -38,6 +44,8 @@ const PredictorPage: React.FC<PredictorPageProps> = ({ user, onUpdateUser }) => 
     const difficulties = ['Easy', 'Medium', 'Hard', 'Hardcore'];
     const predictionsUsed = user.predictionCount;
     const predictionsLeft = PREDICTION_LIMIT - predictionsUsed;
+    const displayedMultipliers = difficultyMultipliers[difficulty as keyof typeof difficultyMultipliers] || difficultyMultipliers.Easy;
+
 
     useEffect(() => {
         document.body.classList.add('game-mode');
@@ -161,11 +169,11 @@ const PredictorPage: React.FC<PredictorPageProps> = ({ user, onUpdateUser }) => 
                     {!prediction && (
                         <>
                            <div className="static-multiplier-container" style={{ left: '50%' }}>
-                                <div className="static-multiplier-circle">1.03X</div>
+                                <div className="static-multiplier-circle">{displayedMultipliers[0]}</div>
                                 <div className="wall-vent"></div>
                             </div>
                             <div className="static-multiplier-container" style={{ left: '83.33%' }}>
-                                <div className="static-multiplier-circle">1.07X</div>
+                                <div className="static-multiplier-circle">{displayedMultipliers[1]}</div>
                                 <div className="wall-vent"></div>
                             </div>
                         </>
