@@ -71,36 +71,72 @@ const playSoundEffect = (type: Sound) => {
                 osc.stop(startTime + 0.2);
             });
         } else if (type === 'chickenRun') {
-            // A dynamic "whoosh" sound to match the animation
-            const duration = 2.8;
+            const duration = 1.0; // Match animation
+            const panNode = ctx.createStereoPanner();
+            panNode.connect(ctx.destination);
 
-            const bufferSize = ctx.sampleRate * duration;
-            const buffer = ctx.createBuffer(1, bufferSize, ctx.sampleRate);
-            const output = buffer.getChannelData(0);
-            for (let i = 0; i < bufferSize; i++) {
-                output[i] = Math.random() * 2 - 1; // White noise
+            // Panning animation from left to right
+            panNode.pan.setValueAtTime(-1, now);
+            panNode.pan.linearRampToValueAtTime(1, now + duration);
+
+            // --- Subtle whoosh background for speed ---
+            const whooshBufferSize = ctx.sampleRate * duration;
+            const whooshBuffer = ctx.createBuffer(1, whooshBufferSize, ctx.sampleRate);
+            const whooshOutput = whooshBuffer.getChannelData(0);
+            for (let i = 0; i < whooshBufferSize; i++) {
+                whooshOutput[i] = Math.random() * 2 - 1; // White noise
             }
-            const noise = ctx.createBufferSource();
-            noise.buffer = buffer;
-            
-            const filter = ctx.createBiquadFilter();
-            filter.type = 'lowpass';
-            filter.Q.value = 5;
-            filter.frequency.setValueAtTime(2000, now); // Start high
-            filter.frequency.exponentialRampToValueAtTime(100, now + duration * 0.8); // Sweep low
+            const whooshSource = ctx.createBufferSource();
+            whooshSource.buffer = whooshBuffer;
 
-            const gainNode = ctx.createGain();
-            gainNode.gain.setValueAtTime(0, now);
-            gainNode.gain.linearRampToValueAtTime(0.15, now + 0.2); // Fade in
-            gainNode.gain.linearRampToValueAtTime(0.15, now + duration - 0.5); // Hold
-            gainNode.gain.linearRampToValueAtTime(0, now + duration); // Fade out
-            
-            noise.connect(filter);
-            filter.connect(gainNode);
-            gainNode.connect(ctx.destination);
-            
-            noise.start(now);
-            noise.stop(now + duration);
+            const bandpass = ctx.createBiquadFilter();
+            bandpass.type = 'bandpass';
+            bandpass.frequency.value = 1500;
+            bandpass.Q.value = 1;
+
+            const whooshGain = ctx.createGain();
+            whooshGain.gain.setValueAtTime(0.0, now);
+            whooshGain.gain.linearRampToValueAtTime(0.05, now + 0.1);
+            whooshGain.gain.linearRampToValueAtTime(0.0, now + duration);
+
+            whooshSource.connect(bandpass);
+            bandpass.connect(whooshGain);
+            whooshGain.connect(panNode);
+
+            whooshSource.start(now);
+            whooshSource.stop(now + duration);
+
+            // --- Rhythmic footsteps for "running" feel ---
+            const stepCount = 14; // A few more steps for a more frantic feel
+            for (let i = 0; i < stepCount; i++) {
+                const stepTime = now + (i / stepCount) * (duration * 0.9);
+
+                // Use a short burst of filtered noise for each step
+                const stepSource = ctx.createBufferSource();
+                const stepBufferSize = ctx.sampleRate * 0.05;
+                const stepBuffer = ctx.createBuffer(1, stepBufferSize, ctx.sampleRate);
+                const stepOutput = stepBuffer.getChannelData(0);
+                for (let j = 0; j < stepBufferSize; j++) {
+                    stepOutput[j] = Math.random() * 2 - 1;
+                }
+                stepSource.buffer = stepBuffer;
+
+                const stepFilter = ctx.createBiquadFilter();
+                stepFilter.type = 'highpass';
+                stepFilter.frequency.value = 1000 + Math.random() * 500;
+
+                const stepGain = ctx.createGain();
+                stepGain.gain.setValueAtTime(0, stepTime);
+                stepGain.gain.linearRampToValueAtTime(0.15, stepTime + 0.01); // Slightly lower gain
+                stepGain.gain.exponentialRampToValueAtTime(0.0001, stepTime + 0.05);
+
+                stepSource.connect(stepFilter);
+                stepFilter.connect(stepGain);
+                stepGain.connect(panNode);
+
+                stepSource.start(stepTime);
+                stepSource.stop(stepTime + 0.05);
+            }
         }
         // --- New Sounds ---
         else if (type === 'buttonClick') {
