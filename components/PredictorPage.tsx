@@ -160,10 +160,14 @@ const PredictorPage: React.FC<PredictorPageProps> = ({ user, onUpdateUser }) => 
                     {/* Decorative Multipliers - Shown only in idle state */}
                     {!isGenerating && !prediction && (
                         <>
-                           <div className="decorative-multiplier" style={{ top: '15%', left: '20%', animationDelay: '0s' }}>2.80x</div>
-                           <div className="decorative-multiplier" style={{ top: '30%', left: '80%', animationDelay: '0.5s' }}>1.52x</div>
-                           <div className="decorative-multiplier" style={{ top: '50%', left: '45%', animationDelay: '0.2s' }}>4.10x</div>
-                           <div className="decorative-multiplier" style={{ top: '8%', left: '65%', animationDelay: '0.8s' }}>1.95x</div>
+                           <div className="static-multiplier-container" style={{ left: '50%' }}>
+                                <div className="static-multiplier-circle">1.03X</div>
+                                <div className="wall-vent"></div>
+                            </div>
+                            <div className="static-multiplier-container" style={{ left: '83.33%' }}>
+                                <div className="static-multiplier-circle">1.07X</div>
+                                <div className="wall-vent"></div>
+                            </div>
                         </>
                     )}
 
@@ -174,9 +178,6 @@ const PredictorPage: React.FC<PredictorPageProps> = ({ user, onUpdateUser }) => 
                             </div>
                         </div>
                     )}
-                    
-                    <div className="wall-vent" style={{ bottom: '40px', left: '50%', transform: 'translateX(-50%)' }}></div>
-                    <div className="wall-vent" style={{ bottom: '40px', left: '83.33%', transform: 'translateX(-50%)' }}></div>
                 </div>
                 <div className="floor"></div>
                 
@@ -196,12 +197,12 @@ const PredictorPage: React.FC<PredictorPageProps> = ({ user, onUpdateUser }) => 
             <footer className="game-footer-dark">
                 <div className="control-panel">
                     <div className="panel-row">
-                        <div className="panel-item">Accuracy - {prediction ? `${prediction.accuracy}%` : '00%?'}</div>
+                        <div className="panel-item">Accuracy - {prediction ? `${prediction.accuracy}%` : ''}</div>
                         <div className="panel-item">Steps -</div>
                     </div>
                     <div className="panel-row">
-                        <div className="panel-item full-width" style={{flexGrow: 2.5}}>Cashout before this value {prediction ? '👉' : '👉🏻'}</div>
-                        <div className="panel-item" style={{flexGrow: 1.5}}>{prediction ? prediction.value : '0.00x?'}</div>
+                        <div className="panel-item full-width" style={{flexGrow: 2.5}}>Cashout before this value 👉</div>
+                        <div className="panel-item" style={{flexGrow: 1.5}}>{prediction ? prediction.value : ''}</div>
                     </div>
                     <div className="panel-row">
                         <div className="relative w-full" ref={dropdownRef}>
