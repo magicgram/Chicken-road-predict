@@ -69,14 +69,14 @@ const LoginPage: React.FC<LoginPageProps> = ({ onLogin, error, isLoading, infoMe
         <div className="flex flex-col items-center justify-center">
              <div className="text-center mb-8">
                 <h1 className="app-title-main">
-                    {'Chicken Road'.split('').map((char, index) => (
+                    {'Chicken'.split('').map((char, index) => (
                         <span key={index} className="char" style={{ animationDelay: `${index * 0.05}s` }}>
                             {char === ' ' ? '\u00A0' : char}
                         </span>
                     ))}
                 </h1>
                 <h2 className="app-title-sub">
-                    Predictor
+                    Road Predictor
                 </h2>
             </div>
             <div className="w-full max-w-md p-8 space-y-6 dark-card">

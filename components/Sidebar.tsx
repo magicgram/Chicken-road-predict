@@ -26,7 +26,7 @@ const NavLink: React.FC<{ onClick: () => void; icon: React.ReactNode; text: stri
     return (
         <a 
             onClick={() => { playSound('buttonClick'); onClick(); }} 
-            className="group relative flex items-center w-full p-3 space-x-4 text-base text-gray-200 rounded-lg hover:bg-black/20 focus:outline-none focus:bg-black/20 transition-colors duration-200 cursor-pointer"
+            className="group relative flex items-center w-full p-3 space-x-4 text-base text-gray-200 rounded-lg hover:bg-[#3a416f] focus:outline-none focus:bg-[#3a416f] transition-colors duration-200 cursor-pointer"
         >
             {icon}
             <span>{text}</span>
@@ -63,22 +63,21 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose, onShowTestPage, onSh
                 className={`absolute inset-0 bg-black/70 backdrop-blur-sm transition-opacity duration-300 ease-out ${isOpen ? 'opacity-100' : 'opacity-0'}`}
                 onClick={onClose}
             ></div>
-            
-            {/* Close Button on top right of screen */}
-             <button 
-                onClick={onClose} 
-                className={`absolute top-5 right-5 text-gray-200 hover:text-white hover:scale-110 transform transition-all duration-300 ease-out z-50 ${isOpen ? 'opacity-100' : 'opacity-0'}`}
-                aria-label="Close menu"
-            >
-                <CloseIcon className="h-8 w-8" />
-            </button>
 
             {/* Panel */}
-            <div className={`relative flex flex-col w-72 max-w-[calc(100vw-40px)] h-full bg-slate-700/80 border-r-4 border-slate-800 shadow-2xl transform transition-transform duration-300 ease-out ${isOpen ? 'translate-x-0' : '-translate-x-full'}`}>
+            <div className={`relative flex flex-col w-72 max-w-[calc(100vw-40px)] h-full bg-[#232743]/95 backdrop-blur-md border-r-2 border-[#4a5288] shadow-2xl transform transition-transform duration-300 ease-out ${isOpen ? 'translate-x-0' : '-translate-x-full'}`}>
                 
                 <div className="flex flex-col h-full">
+                    <button 
+                        onClick={onClose} 
+                        className="absolute top-4 right-4 text-gray-400 hover:text-white z-10 p-1 rounded-full hover:bg-white/10 transition-all"
+                        aria-label="Close menu"
+                    >
+                        <CloseIcon className="h-6 w-6" />
+                    </button>
+                    
                     {/* User Info */}
-                    <div className="flex items-center p-4 pt-16 space-x-3 border-b-2 border-slate-800">
+                    <div className="flex items-center p-4 pt-6 space-x-3 border-b-2 border-[#4a5288]">
                          <input
                             type="file"
                             id="profile-pic-upload"
@@ -87,12 +86,12 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose, onShowTestPage, onSh
                             onChange={handleFileChange}
                             disabled={!user}
                         />
-                        <label htmlFor="profile-pic-upload" onClick={() => user && playSound('buttonClick')} className={`relative p-0.5 rounded-full border-2 border-yellow-400 flex-shrink-0 ${user ? 'cursor-pointer' : 'cursor-default'}`}>
-                            <div className="w-12 h-12 rounded-full bg-slate-800 flex items-center justify-center overflow-hidden">
+                        <label htmlFor="profile-pic-upload" onClick={() => user && playSound('buttonClick')} className={`relative p-0.5 rounded-full border-2 border-indigo-400 flex-shrink-0 ${user ? 'cursor-pointer' : 'cursor-default'}`}>
+                            <div className="w-12 h-12 rounded-full bg-black/30 flex items-center justify-center overflow-hidden">
                                 {user?.profilePictureUrl ? (
                                     <img src={user.profilePictureUrl} alt="Profile" className="w-full h-full object-cover" onContextMenu={(e) => e.preventDefault()} />
                                 ) : (
-                                    <UserIcon className="h-8 w-8 text-yellow-400"/>
+                                    <UserIcon className="h-8 w-8 text-indigo-300"/>
                                 )}
                             </div>
                         </label>
@@ -100,7 +99,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose, onShowTestPage, onSh
                             <p className="font-bold text-base text-white font-['Orbitron'] tracking-wide truncate">
                                 {user ? `${t('sidebar.player')} ${user.id}` : t('sidebar.welcome')}
                             </p>
-                            <p className="text-xs text-yellow-300">Chicken Run Predictor</p>
+                            <p className="text-xs text-indigo-300">Chicken Run Predictor</p>
                         </div>
                     </div>
 
@@ -109,18 +108,18 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose, onShowTestPage, onSh
                         {user && (
                            <NavLink 
                                 onClick={onShowDashboard}
-                                icon={<DashboardIcon className="h-6 w-6 text-gray-300 group-hover:text-yellow-300 transition-colors" />}
+                                icon={<DashboardIcon className="h-6 w-6 text-gray-300 group-hover:text-indigo-300 transition-colors" />}
                                 text={t('sidebar.dashboard')}
                            />
                         )}
                         <NavLink 
                             onClick={onShowTestPage}
-                            icon={<TestIcon className="h-6 w-6 text-gray-300 group-hover:text-yellow-300 transition-colors" />}
+                            icon={<TestIcon className="h-6 w-6 text-gray-300 group-hover:text-indigo-300 transition-colors" />}
                             text={t('sidebar.testPostback')}
                         />
                         <NavLink 
                             onClick={onShowLanguageModal}
-                            icon={<LanguageIcon className="h-6 w-6 text-gray-300 group-hover:text-yellow-300 transition-colors" />}
+                            icon={<LanguageIcon className="h-6 w-6 text-gray-300 group-hover:text-indigo-300 transition-colors" />}
                             text={t('sidebar.languages')}
                         />
                          {user && (
