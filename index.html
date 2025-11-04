@@ -58,6 +58,16 @@
             from { transform: skewX(-25deg) translateX(-150%); }
             to { transform: skewX(-25deg) translateX(150%); }
         }
+        
+        @keyframes float-up-down {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        @keyframes fade-in-blur {
+            from { opacity: 0; filter: blur(10px); }
+            to { opacity: 1; filter: blur(2px); }
+        }
 
         /* --- GENERAL STYLES --- */
         :root {
@@ -440,6 +450,19 @@
             background: linear-gradient(to bottom, rgba(255,255,255,0.4), transparent);
             border-radius: 50% / 25%;
             filter: blur(5px);
+        }
+
+        .decorative-multiplier {
+            position: absolute;
+            font-family: 'Orbitron', sans-serif;
+            font-size: clamp(1.5rem, 5vw, 2.5rem);
+            font-weight: 700;
+            color: rgba(255, 255, 255, 0.2);
+            text-shadow: 0 0 10px rgba(253, 224, 71, 0.2);
+            z-index: 1;
+            animation: float-up-down 4s ease-in-out infinite, fade-in-blur 1s ease-out forwards;
+            filter: blur(2px);
+            pointer-events: none;
         }
 
         /* --- Dropdown Styles --- */

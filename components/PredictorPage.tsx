@@ -97,14 +97,14 @@ const PredictorPage: React.FC<PredictorPageProps> = ({ user, onUpdateUser }) => 
             
             setIsGenerating(false);
             
-            if (chickenRef.current) {
-                // Let animation finish, then remove class
-                setTimeout(() => {
-                    if (chickenRef.current) {
-                        chickenRef.current.classList.remove('running');
-                    }
-                }, 1000);
-            }
+            // The chicken is hidden via conditional rendering when `prediction` is set,
+            // so we only need to manage the animation class removal for the next run.
+            setTimeout(() => {
+                if (chickenRef.current) {
+                    chickenRef.current.classList.remove('running');
+                }
+            }, 1000);
+
         }, 3000); 
     };
 
@@ -112,6 +112,8 @@ const PredictorPage: React.FC<PredictorPageProps> = ({ user, onUpdateUser }) => 
         playSound('nextRound');
         setPrediction(null);
     };
+
+
 
     const handleDeposit = () => {
         playSound('buttonClick');
@@ -155,6 +157,16 @@ const PredictorPage: React.FC<PredictorPageProps> = ({ user, onUpdateUser }) => 
                     <div className="vertical-divider" style={{ left: '33.33%' }}></div>
                     <div className="vertical-divider" style={{ left: '66.67%' }}></div>
                     
+                    {/* Decorative Multipliers - Shown only in idle state */}
+                    {!isGenerating && !prediction && (
+                        <>
+                           <div className="decorative-multiplier" style={{ top: '15%', left: '20%', animationDelay: '0s' }}>2.80x</div>
+                           <div className="decorative-multiplier" style={{ top: '30%', left: '80%', animationDelay: '0.5s' }}>1.52x</div>
+                           <div className="decorative-multiplier" style={{ top: '50%', left: '45%', animationDelay: '0.2s' }}>4.10x</div>
+                           <div className="decorative-multiplier" style={{ top: '8%', left: '65%', animationDelay: '0.8s' }}>1.95x</div>
+                        </>
+                    )}
+
                     {prediction && !isGenerating && (
                         <div className="result-display-circle-container">
                             <div className="result-display-circle">
@@ -167,26 +179,29 @@ const PredictorPage: React.FC<PredictorPageProps> = ({ user, onUpdateUser }) => 
                     <div className="wall-vent" style={{ bottom: '40px', left: '83.33%', transform: 'translateX(-50%)' }}></div>
                 </div>
                 <div className="floor"></div>
-
-                <div ref={chickenRef} className="chicken">
-                    <img 
-                        src="https://i.postimg.cc/mDw7YjT7/bg-edited-gif-f6418d08-29c7-48f8-ae03-bca18b3d46be-GIFSolo-20251103-113356.gif" 
-                        alt="Running Chicken" 
-                        className="w-full h-full object-contain"
-                        onContextMenu={(e) => e.preventDefault()}
-                    />
-                </div>
+                
+                {/* Hen is hidden when a prediction is shown */}
+                {!prediction && (
+                    <div ref={chickenRef} className="chicken">
+                        <img 
+                            src="https://i.postimg.cc/mDw7YjT7/bg-edited-gif-f6418d08-29c7-48f8-ae03-bca18b3d46be-GIFSolo-20251103-113356.gif" 
+                            alt="Running Chicken" 
+                            className="w-full h-full object-contain"
+                            onContextMenu={(e) => e.preventDefault()}
+                        />
+                    </div>
+                )}
             </div>
 
             <footer className="game-footer-dark">
                 <div className="control-panel">
                     <div className="panel-row">
-                        <div className="panel-item">Accuracy - {prediction ? `${prediction.accuracy}%` : ''}</div>
+                        <div className="panel-item">Accuracy - {prediction ? `${prediction.accuracy}%` : '00%?'}</div>
                         <div className="panel-item">Steps -</div>
                     </div>
                     <div className="panel-row">
-                        <div className="panel-item full-width" style={{flexGrow: 2.5}}>Cashout before this value 👉</div>
-                        <div className="panel-item" style={{flexGrow: 1.5}}>{prediction ? prediction.value : ''}</div>
+                        <div className="panel-item full-width" style={{flexGrow: 2.5}}>Cashout before this value {prediction ? '👉' : '👉🏻'}</div>
+                        <div className="panel-item" style={{flexGrow: 1.5}}>{prediction ? prediction.value : '0.00x?'}</div>
                     </div>
                     <div className="panel-row">
                         <div className="relative w-full" ref={dropdownRef}>
