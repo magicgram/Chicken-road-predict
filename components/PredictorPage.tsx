@@ -1,4 +1,5 @@
 
+
 import React, { useState, useEffect, useRef } from 'react';
 import type { User } from '../types';
 import { useTranslations } from '../hooks/useTranslations';
@@ -153,26 +154,21 @@ const PredictorPage: React.FC<PredictorPageProps> = ({ user, onUpdateUser }) => 
         <div className="game-container-dark">
             <div className="game-scenery">
                 <div className="wall-background">
-                    {/* --- BACKGROUND ARCHES (THREE LANES) --- */}
-                    <div className="game-arch" style={{ left: '25%', transform: 'translateX(-50%)' }}></div>
-                    <div className="game-arch" style={{ left: '50%', transform: 'translateX(-50%)' }}></div>
-                    <div className="game-arch" style={{ left: '75%', transform: 'translateX(-50%)' }}></div>
+                    {/* --- BACKGROUND ARCHES (TWO LANES) --- */}
+                    <div className="game-arch" style={{ left: '33.33%', transform: 'translateX(-50%)' }}></div>
+                    <div className="game-arch" style={{ left: '66.67%', transform: 'translateX(-50%)' }}></div>
 
                     {/* --- MULTIPLIER CIRCLES --- */}
-                    <div className="multiplier-circle" style={{ top: '18vh', left: '25%', transform: 'translateX(-50%)' }}>
+                    <div className="multiplier-circle" style={{ top: '18vh', left: '33.33%', transform: 'translateX(-50%)' }}>
                         1.03x
                     </div>
-                    <div className="multiplier-circle" style={{ top: '18vh', left: '50%', transform: 'translateX(-50%)' }}>
-                        1.03x
-                    </div>
-                    <div className="multiplier-circle" style={{ top: '18vh', left: '75%', transform: 'translateX(-50%)' }}>
+                    <div className="multiplier-circle" style={{ top: '18vh', left: '66.67%', transform: 'translateX(-50%)' }}>
                         1.03x
                     </div>
 
                     {/* --- VENTS --- */}
-                    <div className="wall-vent" style={{ bottom: '40px', left: '25%', transform: 'translateX(-50%)' }}></div>
-                    <div className="wall-vent" style={{ bottom: '40px', left: '50%', transform: 'translateX(-50%)' }}></div>
-                    <div className="wall-vent" style={{ bottom: '40px', left: '75%', transform: 'translateX(-50%)' }}></div>
+                    <div className="wall-vent" style={{ bottom: '40px', left: '33.33%', transform: 'translateX(-50%)' }}></div>
+                    <div className="wall-vent" style={{ bottom: '40px', left: '66.67%', transform: 'translateX(-50%)' }}></div>
                 </div>
                 <div className="floor"></div>
 
