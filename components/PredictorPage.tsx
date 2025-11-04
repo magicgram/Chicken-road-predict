@@ -152,18 +152,21 @@ const PredictorPage: React.FC<PredictorPageProps> = ({ user, onUpdateUser }) => 
         <div className="game-container-dark">
             <div className="game-scenery">
                 <div className="wall-background">
-                    <div className="doorway"></div>
+                    {/* --- BACKGROUND ARCHES --- */}
+                    <div className="game-arch" style={{ left: '25vw', transform: 'translateX(-50%)' }}></div>
+                    <div className="game-arch" style={{ left: '75vw', transform: 'translateX(-50%)' }}></div>
+
                     {/* --- MULTIPLIER CIRCLES --- */}
-                    <div className="multiplier-circle" style={{ top: '15%', left: '25vw', transform: 'translateX(-50%)' }}>
-                        1.3x
+                    <div className="multiplier-circle" style={{ top: '22vh', left: '25vw', transform: 'translateX(-50%)' }}>
+                        1.03x
                     </div>
-                    <div className="multiplier-circle" style={{ top: '15%', left: '75vw', transform: 'translateX(-50%)' }}>
-                        1.7x
+                    <div className="multiplier-circle" style={{ top: '22vh', left: '75vw', transform: 'translateX(-50%)' }}>
+                        1.03x
                     </div>
 
                     {/* --- VENTS --- */}
-                    <div className="wall-vent" style={{ bottom: '20px', left: '25vw', transform: 'translateX(-50%)' }}></div>
-                    <div className="wall-vent" style={{ bottom: '20px', left: '75vw', transform: 'translateX(-50%)' }}></div>
+                    <div className="wall-vent" style={{ bottom: '40px', left: '25vw', transform: 'translateX(-50%)' }}></div>
+                    <div className="wall-vent" style={{ bottom: '40px', left: '75vw', transform: 'translateX(-50%)' }}></div>
                 </div>
                 <div className="floor"></div>
 

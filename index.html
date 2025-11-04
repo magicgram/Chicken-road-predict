@@ -231,6 +231,15 @@
             display: flex;
             flex-direction: column;
         }
+        
+        .header-dot {
+            flex-shrink: 0;
+            margin-top: 6px;
+            width: 10px;
+            height: 10px;
+            background-color: #facc15;
+            border-radius: 50%;
+        }
 
         .game-scenery {
             flex-grow: 1;
@@ -246,9 +255,21 @@
                 radial-gradient(ellipse at 10% 90%, rgba(20, 23, 38, 0.4), transparent 50%);
         }
         
+        .game-arch {
+            position: absolute;
+            bottom: 10px; /* Floor height */
+            height: calc(100% - 10px);
+            width: 38vw;
+            max-width: 180px;
+            border-left: 1px solid rgba(253, 224, 71, 0.12);
+            border-right: 1px solid rgba(253, 224, 71, 0.12);
+            border-top: 1px solid rgba(253, 224, 71, 0.12);
+            border-radius: 90px 90px 0 0;
+            box-shadow: 0 0 30px rgba(253, 224, 71, 0.05);
+        }
+        
         .wall-vent {
             position: absolute;
-            bottom: 20px;
             width: 100px;
             height: 40px;
             background: #141726;
@@ -275,24 +296,13 @@
             border-top: 10px solid #141726;
         }
 
-        .doorway {
-            position: absolute;
-            bottom: 0;
-            left: clamp(-20px, 5vw, 40px);
-            width: 100px;
-            height: 180px;
-            background: #141726;
-            border-radius: 50px 50px 0 0;
-        }
-
         .chicken {
             position: absolute;
-            bottom: -10px;
-            left: clamp(-20px, 5vw, 40px);
+            bottom: 0;
+            left: clamp(10px, 5vw, 40px);
             width: 100px;
             height: 100px;
             z-index: 5;
-            transform: translateX(-10px);
         }
         
         @keyframes fast-chicken-run {
