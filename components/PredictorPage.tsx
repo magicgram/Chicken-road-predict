@@ -152,17 +152,18 @@ const PredictorPage: React.FC<PredictorPageProps> = ({ user, onUpdateUser }) => 
         <div className="game-container-dark">
             <div className="game-scenery">
                 <div className="wall-background">
-                    <div className="vertical-dashed-line"></div>
-                    <div className="wall-vent" style={{ left: '35%' }}></div>
-                    <div className="wall-vent" style={{ right: '15%' }}></div>
                     <div className="doorway"></div>
                     {/* --- MULTIPLIER CIRCLES --- */}
-                    <div className="multiplier-circle" style={{ top: '25%', left: 'calc(50% - 150px)' }}>
+                    <div className="multiplier-circle" style={{ top: '25%', left: '25vw', transform: 'translateX(-50%)' }}>
                         1.3x
                     </div>
-                    <div className="multiplier-circle" style={{ top: '25%', left: 'calc(50% + 50px)' }}>
+                    <div className="multiplier-circle" style={{ top: '25%', left: '75vw', transform: 'translateX(-50%)' }}>
                         1.7x
                     </div>
+
+                    {/* --- VENTS --- */}
+                    <div className="wall-vent" style={{ bottom: '20px', left: '25vw', transform: 'translateX(-50%)' }}></div>
+                    <div className="wall-vent" style={{ bottom: '20px', left: '75vw', transform: 'translateX(-50%)' }}></div>
                 </div>
                 <div className="floor"></div>
 
