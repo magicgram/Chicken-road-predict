@@ -16,14 +16,6 @@ const COMMON_MULTIPLIERS = ["1.20x", "1.44x", "1.72x", "2.06x", "2.47x"];
 const RARE_MULTIPLIERS = ["2.96x", "3.55x", "4.26x", "5.11x"];
 const RARE_CHANCE = 1 / 15; // Approx 1 in 15 will be rare
 
-// --- Difficulty Multipliers ---
-const difficultyMultipliers = {
-    Easy: ['1.03x', '1.07x'],
-    Medium: ['1.12x', '1.28x'],
-    Hard: ['1.23x', '1.55x'],
-    Hardcore: ['1.63x', '2.80x'],
-};
-
 // --- Component Props Interface ---
 interface PredictorPageProps {
     user: User;
@@ -34,22 +26,18 @@ interface PredictorPageProps {
 const PredictorPage: React.FC<PredictorPageProps> = ({ user, onUpdateUser }) => {
     const [isGenerating, setIsGenerating] = useState(false);
     const [prediction, setPrediction] = useState<{ value: string; accuracy: number } | null>(null);
-    const [showResult, setShowResult] = useState(false);
     const [lastPredictionValue, setLastPredictionValue] = useState<string | null>(null);
     const [difficulty, setDifficulty] = useState('Easy');
     const [isDifficultyOpen, setIsDifficultyOpen] = useState(false);
     
     const dropdownRef = useRef<HTMLDivElement>(null);
     const chickenRef = useRef<HTMLDivElement>(null);
-    // Fix: Destructure formatCurrency from useTranslations to make it available in the component.
     const { t, formatCurrency } = useTranslations();
     const { playSound } = useSound();
 
     const difficulties = ['Easy', 'Medium', 'Hard', 'Hardcore'];
     const predictionsUsed = user.predictionCount;
     const predictionsLeft = PREDICTION_LIMIT - predictionsUsed;
-    
-    const currentMultipliers = difficultyMultipliers[difficulty as keyof typeof difficultyMultipliers];
 
     useEffect(() => {
         document.body.classList.add('game-mode');
@@ -59,10 +47,10 @@ const PredictorPage: React.FC<PredictorPageProps> = ({ user, onUpdateUser }) => 
     }, []);
     
     useEffect(() => {
-        if (showResult && prediction) {
+        if (prediction && !isGenerating) {
             playSound('predictionReveal');
         }
-    }, [showResult, prediction, playSound]);
+    }, [prediction, isGenerating, playSound]);
 
     useEffect(() => {
         const handleClickOutside = (event: MouseEvent) => {
@@ -77,8 +65,8 @@ const PredictorPage: React.FC<PredictorPageProps> = ({ user, onUpdateUser }) => 
     }, []);
 
     const handleGetSignal = () => {
-        if (predictionsLeft <= 0 || user.awaitingDeposit || isGenerating || showResult) {
-            if(!isGenerating && !showResult) onUpdateUser({ ...user, awaitingDeposit: true });
+        if (predictionsLeft <= 0 || user.awaitingDeposit || isGenerating || prediction) {
+            if(!isGenerating && !prediction) onUpdateUser({ ...user, awaitingDeposit: true });
             return;
         }
         
@@ -108,7 +96,6 @@ const PredictorPage: React.FC<PredictorPageProps> = ({ user, onUpdateUser }) => 
             onUpdateUser({ ...user, predictionCount: user.predictionCount + 1 });
             
             setIsGenerating(false);
-            setShowResult(true);
             
             if (chickenRef.current) {
                 // Let animation finish, then remove class
@@ -123,7 +110,6 @@ const PredictorPage: React.FC<PredictorPageProps> = ({ user, onUpdateUser }) => 
 
     const handleNextRound = () => {
         playSound('nextRound');
-        setShowResult(false);
         setPrediction(null);
     };
 
@@ -169,12 +155,13 @@ const PredictorPage: React.FC<PredictorPageProps> = ({ user, onUpdateUser }) => 
                     <div className="vertical-divider" style={{ left: '33.33%' }}></div>
                     <div className="vertical-divider" style={{ left: '66.67%' }}></div>
                     
-                    <div className="multiplier-circle" style={{ top: '18vh', left: '50%', transform: 'translateX(-50%)' }}>
-                        {currentMultipliers[0]}
-                    </div>
-                    <div className="multiplier-circle" style={{ top: '18vh', left: '83.33%', transform: 'translateX(-50%)' }}>
-                        {currentMultipliers[1]}
-                    </div>
+                    {prediction && !isGenerating && (
+                        <div className="result-display-circle-container">
+                            <div className="result-display-circle">
+                                <span>{prediction.value}</span>
+                            </div>
+                        </div>
+                    )}
                     
                     <div className="wall-vent" style={{ bottom: '40px', left: '50%', transform: 'translateX(-50%)' }}></div>
                     <div className="wall-vent" style={{ bottom: '40px', left: '83.33%', transform: 'translateX(-50%)' }}></div>
@@ -194,12 +181,12 @@ const PredictorPage: React.FC<PredictorPageProps> = ({ user, onUpdateUser }) => 
             <footer className="game-footer-dark">
                 <div className="control-panel">
                     <div className="panel-row">
-                        <div className="panel-item">Accuracy -</div>
+                        <div className="panel-item">Accuracy - {prediction ? `${prediction.accuracy}%` : ''}</div>
                         <div className="panel-item">Steps -</div>
                     </div>
                     <div className="panel-row">
                         <div className="panel-item full-width" style={{flexGrow: 2.5}}>Cashout before this value 👉</div>
-                        <div className="panel-item" style={{flexGrow: 1.5}}></div>
+                        <div className="panel-item" style={{flexGrow: 1.5}}>{prediction ? prediction.value : ''}</div>
                     </div>
                     <div className="panel-row">
                         <div className="relative w-full" ref={dropdownRef}>
@@ -242,35 +229,14 @@ const PredictorPage: React.FC<PredictorPageProps> = ({ user, onUpdateUser }) => 
                         </div>
                     </div>
                     <button 
-                        onClick={handleGetSignal}
-                        disabled={isGenerating || showResult}
+                        onClick={prediction ? handleNextRound : handleGetSignal}
+                        disabled={isGenerating}
                         className="btn-get-signal"
                     >
-                        {isGenerating ? t('predictor.generating') : t('predictor.getSignal')}
+                        {isGenerating ? t('predictor.generating') : (prediction ? t('predictor.nextRound') : t('predictor.getSignal'))}
                     </button>
                 </div>
             </footer>
-            
-            {showResult && prediction && (
-                <div className="result-overlay">
-                    <div className="result-modal result-modal-dark">
-                        <div className="result-coin">
-                            <span>{prediction.value}</span>
-                        </div>
-                        <div className="result-info">
-                            {t('predictor.accuracyLabel').replace('{accuracy}', prediction.accuracy.toString())}
-                            <br />
-                            {t('predictor.cashoutLabel').replace('{value}', prediction.value)}
-                        </div>
-                         <button 
-                            className="action-button"
-                            onClick={handleNextRound}
-                        >
-                            {t('predictor.nextRound')}
-                        </button>
-                    </div>
-                </div>
-            )}
         </div>
     );
 };
