@@ -41,7 +41,7 @@ const LoginPage: React.FC<LoginPageProps> = ({ onLogin, error, isLoading, infoMe
             const depositAmount = formatCurrency(500);
             const lines = t('info.registeredNeedsDeposit', { depositAmount }).split('\n');
             return (
-                 <div className="p-3 bg-black/20 border-2 border-yellow-500/50 rounded-lg text-sm space-y-2">
+                 <div className="p-3 bg-black/20 border-2 border-indigo-500/50 rounded-lg text-sm space-y-2">
                      {lines.map((line, index) => {
                          const trimmedLine = line.trim();
                          const firstSpaceIndex = trimmedLine.indexOf(' ');
@@ -49,7 +49,7 @@ const LoginPage: React.FC<LoginPageProps> = ({ onLogin, error, isLoading, infoMe
                          const text = trimmedLine.substring(firstSpaceIndex + 1);
                          return (
                              <div key={index} className="flex items-start">
-                                 <span className="mr-3 text-lg text-yellow-300">{icon}</span>
+                                 <span className="mr-3 text-lg text-indigo-300">{icon}</span>
                                  <p className="text-gray-200 flex-1">{text}</p>
                              </div>
                          );
@@ -59,7 +59,7 @@ const LoginPage: React.FC<LoginPageProps> = ({ onLogin, error, isLoading, infoMe
         }
         // Fallback for any other info message
         return (
-            <div className="p-3 bg-black/20 border-2 border-yellow-500/50 rounded-lg text-sm space-y-2">
+            <div className="p-3 bg-black/20 border-2 border-indigo-500/50 rounded-lg text-sm space-y-2">
                 <p className="text-gray-200 flex-1">{infoMessage}</p>
             </div>
         )
@@ -69,25 +69,25 @@ const LoginPage: React.FC<LoginPageProps> = ({ onLogin, error, isLoading, infoMe
         <div className="flex flex-col items-center justify-center">
              <div className="text-center mb-8">
                 <h1 className="app-title-main">
-                    {'Chicken'.split('').map((char, index) => (
+                    {'Chicken Road'.split('').map((char, index) => (
                         <span key={index} className="char" style={{ animationDelay: `${index * 0.05}s` }}>
-                            {char}
+                            {char === ' ' ? '\u00A0' : char}
                         </span>
                     ))}
                 </h1>
                 <h2 className="app-title-sub">
-                    Run Predictor
+                    Predictor
                 </h2>
             </div>
-            <div className="w-full max-w-md p-8 space-y-6 content-card">
+            <div className="w-full max-w-md p-8 space-y-6 dark-card">
                 <div className="text-center">
                     <h1 className="text-4xl page-title mb-2">{t('login.title')}</h1>
-                    <p className="text-gray-200 mt-2">{t('login.subtitle')}</p>
+                    <p className="text-gray-300 mt-2">{t('login.subtitle')}</p>
                 </div>
 
                 <form onSubmit={handleSubmit} className="space-y-6">
                     <div>
-                         <label htmlFor="userId" className="text-sm font-medium text-gray-200 mb-2 block">{t('login.playerIDLabel')}</label>
+                         <label htmlFor="userId" className="text-sm font-medium text-gray-300 mb-2 block">{t('login.playerIDLabel')}</label>
                         <input
                             id="userId"
                             type="text"
@@ -120,7 +120,7 @@ const LoginPage: React.FC<LoginPageProps> = ({ onLogin, error, isLoading, infoMe
                         <button
                             type="submit"
                             disabled={isLoading}
-                            className="w-full btn-game"
+                            className="w-full btn-primary"
                         >
                             {isLoading ? (
                                 <div className="w-6 h-6 border-2 border-dashed rounded-full animate-spin border-white/70 mx-auto"></div>
@@ -137,7 +137,7 @@ const LoginPage: React.FC<LoginPageProps> = ({ onLogin, error, isLoading, infoMe
                             <div className="w-full border-t border-white/20" />
                         </div>
                         <div className="relative flex justify-center text-sm">
-                            <span style={{ backgroundColor: '#8C5A3A' }} className="px-3 text-gray-200">
+                            <span style={{ backgroundColor: '#2d314d' }} className="px-3 text-gray-300 rounded-full">
                                 {t('login.noAccount')}
                             </span>
                         </div>
@@ -146,7 +146,7 @@ const LoginPage: React.FC<LoginPageProps> = ({ onLogin, error, isLoading, infoMe
                     <button
                         onClick={handleRegister}
                         type="button"
-                        className="w-full btn-game"
+                        className="w-full btn-primary"
                     >
                         {t('login.registerButton')}
                     </button>

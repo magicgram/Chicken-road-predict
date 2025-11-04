@@ -32,11 +32,6 @@
             from { transform: translateX(-150px); }
             to { transform: translateX(100vw); }
         }
-
-        @keyframes move-clouds-slow {
-            from { background-position: -60% 10%, -80% 30%, -70% 0; }
-            to { background-position: 160% 10%, 140% 30%, 180% 0; }
-        }
         
         @keyframes flip-in {
             from {
@@ -59,82 +54,51 @@
             to { transform: skewX(-25deg) translateX(150%); }
         }
         
-        /* --- GENERAL STYLES --- */
-        :root {
-            --wood-bg: #8c5a3a;
-            --wood-border: #593a24;
-            --text-on-wood: #ffffff;
-            --text-dark: #2c3e50;
-            --yellow-accent: #f1c40f;
-            --yellow-accent-dark: #d35400;
-        }
-
+        /* --- GENERAL STYLES (NEW DARK THEME) --- */
         body {
             font-family: 'Inter', sans-serif;
-            color: var(--text-dark);
+            color: #e0e7ff;
             overflow-x: hidden;
-            background: linear-gradient(to bottom, #65b2e8, #a2d2f3 75vh, #6c6c6c 75vh, #6c6c6c 100vh);
-            background-attachment: fixed;
+            background-color: #2c325c;
+            background-image: radial-gradient(circle at top left, rgba(88, 98, 150, 0.3) 0%, transparent 40%),
+                              radial-gradient(circle at bottom right, rgba(44, 49, 85, 0.4) 0%, transparent 50%);
             display: flex;
             flex-direction: column;
-            min-height: 100vh;
+            min-height: 100vh; /* Fallback */
+            min-height: 100dvh;
         }
 
         .page-container {
             flex-grow: 1;
             display: flex;
+            flex-direction: column;
             align-items: center;
             justify-content: center;
             padding: 1rem;
-            position: relative;
-        }
-        
-        .static-clouds {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 40vh;
-            z-index: -1;
-            background:
-                radial-gradient(ellipse at top, #d7d7d7 0%, transparent 50%),
-                radial-gradient(ellipse at bottom, #e0e0e0 0%, transparent 60%),
-                radial-gradient(ellipse at center, #f0f0f0 0%, transparent 70%);
-            background-repeat: no-repeat;
-            background-size: 60% 40%, 80% 50%, 70% 60%;
-            opacity: 0.5;
-            filter: blur(10px);
-            animation: move-clouds-slow 120s linear infinite;
+            width: 100%;
         }
         
         .main-content {
             animation: fade-in-up 0.7s cubic-bezier(0.25, 1, 0.5, 1) forwards;
         }
         
-        .content-card {
-            background-color: var(--wood-bg);
-            border: 8px solid var(--wood-border);
+        .dark-card {
+            background-color: rgba(45, 49, 77, 0.6);
+            border: 2px solid #4a5288;
             border-radius: 1rem;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.4), inset 0 0 15px rgba(0,0,0,0.3);
+            box-shadow: 0 8px 32px rgba(0,0,0,0.5);
+            backdrop-filter: blur(8px);
             width: 100%;
             max-width: 500px;
-            color: var(--text-on-wood);
+            color: #e0e7ff;
         }
 
         .app-title-main {
             font-family: 'Orbitron', sans-serif;
             font-weight: 900;
-            font-size: clamp(2.8rem, 12vw, 5rem);
-            color: #facc15; 
-            background: linear-gradient(180deg, #fff8c5 0%, #fde047 30%, #facc15 60%, #eab308 85%, #a16207 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            text-shadow: 
-                0px -1px 1px rgba(255, 255, 230, 0.6),
-                -2px -2px 0 #42200a, 2px -2px 0 #42200a, -2px 2px 0 #42200a, 2px 2px 0 #42200a,
-                 4px 6px 0 #271302,
-                 6px 9px 15px rgba(0,0,0,0.7);
+            font-size: clamp(2.8rem, 10vw, 4rem);
+            color: white;
+            text-shadow: 0 0 8px rgba(255, 255, 255, 0.3), 0 0 15px rgba(167, 139, 250, 0.7), 0 0 25px rgba(167, 139, 250, 0.5);
             letter-spacing: 0.05em;
             display: inline-block;
             line-height: 0.9;
@@ -151,19 +115,19 @@
             font-family: 'Inter', sans-serif;
             font-weight: 700;
             font-size: clamp(1rem, 4.5vw, 1.4rem);
-            color: #ffffff;
+            color: #a7b3ff;
             text-transform: uppercase;
             letter-spacing: 0.3em;
             margin-top: 0.5rem;
             opacity: 0;
             animation: fade-in-sub 1s ease-out 0.8s forwards;
-            text-shadow: 2px 3px 4px #271302;
+            text-shadow: 0 0 5px rgba(167, 179, 255, 0.5);
         }
 
         .page-title {
             font-family: 'Orbitron', sans-serif;
             color: white;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.6);
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
         }
         
         .loading-spinner {
@@ -171,60 +135,57 @@
             height: 4rem;
             border-radius: 50%;
             display: inline-block;
-            border-top: 4px solid var(--yellow-accent);
+            border-top: 4px solid #8b5cf6;
             border-right: 4px solid transparent;
-            border-bottom: 4px solid var(--yellow-accent-dark);
+            border-bottom: 4px solid #6366f1;
             border-left: 4px solid transparent;
             animation: spin 1s linear infinite;
         }
 
-        .btn-game {
+        .btn-primary {
             width: 100%;
             padding: 0.8rem 1.5rem;
-            background: linear-gradient(to bottom, #f1c40f, #f39c12);
-            color: var(--text-dark);
+            background: linear-gradient(to bottom, #8b5cf6, #6366f1);
+            color: white;
             font-size: 1.125rem;
             font-weight: 700;
             border: none;
             border-radius: 0.75rem;
-            border-bottom: 5px solid var(--yellow-accent-dark);
-            text-shadow: 1px 1px 1px rgba(255,255,255,0.4);
+            border-bottom: 5px solid #4f46e5;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.4);
             transition: all 0.1s ease;
             text-align: center;
             position: relative;
             overflow: hidden;
         }
-        .btn-game:hover:not(:disabled) { filter: brightness(1.05); }
-        .btn-game:active:not(:disabled) { transform: translateY(3px); border-bottom-width: 2px; }
-        .btn-game:disabled { filter: grayscale(0.8); cursor: not-allowed; opacity: 0.8; }
+        .btn-primary:hover:not(:disabled) { filter: brightness(1.1); }
+        .btn-primary:active:not(:disabled) { transform: translateY(3px); border-bottom-width: 2px; }
+        .btn-primary:disabled { filter: grayscale(0.8); cursor: not-allowed; opacity: 0.8; }
 
         .form-input {
             width: 100%;
             padding: 0.85rem 1rem;
-            color: var(--text-on-wood);
-            background-color: rgba(0,0,0,0.2);
-            border: 2px solid var(--wood-border);
+            color: #e0e7ff;
+            background-color: #44496b;
+            border: 2px solid #4a5288;
             border-radius: 0.5rem;
             transition: all 0.3s ease;
-            box-shadow: inset 0 3px 6px rgba(0,0,0,0.4);
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.4);
         }
-        .form-input::placeholder { color: rgba(255,255,255,0.5); }
-        .form-input:focus { outline: none; border-color: var(--yellow-accent); background-color: rgba(0,0,0,0.3); }
+        .form-input::placeholder { color: rgba(224, 231, 255, 0.5); }
+        .form-input:focus { outline: none; border-color: #8b5cf6; background-color: #383d5a; }
 
-        /* --- NEW GAME THEME (CHICKEN ROAD) --- */
-        body.game-mode {
-            padding: 0 !important;
-            background-color: #2c325c;
-            background-image: radial-gradient(circle at top left, rgba(88, 98, 150, 0.3) 0%, transparent 40%),
-                              radial-gradient(circle at bottom right, rgba(44, 49, 85, 0.4) 0%, transparent 50%);
-            overflow: hidden;
-            background-attachment: fixed;
+        /* --- NEW GAME THEME (CHICKEN ROAD) - Now Global --- */
+        #root {
+           width: 100%;
+           height: 100%;
+           display: flex;
+           flex-direction: column;
         }
-
+        
         .game-container-dark {
             width: 100%;
             height: 100vh; /* Fallback for older browsers */
-            /* Using dynamic viewport height to account for mobile browser UI */
             height: 100dvh;
             overflow: hidden;
             position: relative;
@@ -570,7 +531,7 @@
         }
 
         /* --- Lighting Sweep Animation --- */
-        .btn-game::before,
+        .btn-primary::before,
         .header-btn::before {
             content: '';
             position: absolute;
@@ -583,7 +544,7 @@
             pointer-events: none;
         }
 
-        .btn-game:hover:not(:disabled)::before,
+        .btn-primary:hover:not(:disabled)::before,
         .header-btn:hover:not(:disabled)::before {
             animation: lighting-sweep 0.8s ease-in-out;
         }

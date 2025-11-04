@@ -70,13 +70,6 @@ const PredictorPage: React.FC<PredictorPageProps> = ({ user, onUpdateUser }) => 
     const predictionsLeft = PREDICTION_LIMIT - predictionsUsed;
     const displayedMultipliers = difficultyMultipliers[difficulty as keyof typeof difficultyMultipliers] || difficultyMultipliers.Easy;
 
-
-    useEffect(() => {
-        document.body.classList.add('game-mode');
-        return () => {
-            document.body.classList.remove('game-mode');
-        };
-    }, []);
     
     useEffect(() => {
         if (prediction && !isGenerating) {
@@ -162,21 +155,20 @@ const PredictorPage: React.FC<PredictorPageProps> = ({ user, onUpdateUser }) => 
         });
         return (
              <div className="flex items-center justify-center min-h-screen p-4">
-                 <div className="static-clouds"></div>
-                 <div className="text-center p-8 content-card max-w-lg mx-auto">
+                 <div className="text-center p-8 dark-card max-w-lg mx-auto">
                      <h3 className="text-2xl font-bold text-white mb-3 page-title">{t('predictor.limitTitle')}</h3>
-                     <p className="text-gray-200 mb-6">{t('predictor.limitSubtitle')}</p>
-                     <div className="bg-black/20 border-2 border-yellow-500/50 rounded-lg p-4 mb-6">
+                     <p className="text-gray-300 mb-6">{t('predictor.limitSubtitle')}</p>
+                     <div className="bg-black/20 border-2 border-indigo-500/50 rounded-lg p-4 mb-6">
                          <p className="font-semibold text-white">{t('predictor.whyDeposit')}</p>
-                         <p className="text-sm text-gray-200 mt-1">{depositInfo}</p>
+                         <p className="text-sm text-gray-300 mt-1">{depositInfo}</p>
                      </div>
                      <button
                         onClick={handleDeposit}
-                        className="w-full btn-game"
+                        className="w-full btn-primary"
                     >
                         {t('predictor.depositNow')}
                     </button>
-                    <p className="text-xs text-gray-300 mt-4">{t('predictor.depositNote')}</p>
+                    <p className="text-xs text-gray-400 mt-4">{t('predictor.depositNote')}</p>
                 </div>
             </div>
         );
@@ -255,7 +247,7 @@ const PredictorPage: React.FC<PredictorPageProps> = ({ user, onUpdateUser }) => 
                                         >
                                             <span>{d}</span>
                                             {difficulty === d && (
-                                                <svg className="h-5 w-5 text-yellow-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                                <svg className="h-5 w-5 text-green-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
                                                     <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                                                 </svg>
                                             )}

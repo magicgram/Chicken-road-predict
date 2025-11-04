@@ -237,7 +237,6 @@ const AppContent: React.FC = () => {
     if (isLoading && !user) { // Only show full-screen loader on initial load
         return (
             <div className="flex items-center justify-center min-h-screen">
-                 <div className="static-clouds"></div>
                 <div className="loading-spinner"></div>
             </div>
         );
@@ -256,8 +255,6 @@ const AppContent: React.FC = () => {
 
     return (
         <div className={isPredictorPageActive ? '' : 'page-container'}>
-            {!isPredictorPageActive && <div className="static-clouds"></div>}
-
             <PasswordModal 
                 isOpen={isPasswordModalOpen}
                 onClose={() => { playSound('modalClose'); setIsPasswordModalOpen(false); }}
