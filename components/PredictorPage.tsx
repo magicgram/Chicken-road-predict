@@ -16,6 +16,13 @@ const COMMON_MULTIPLIERS = ["1.20x", "1.44x", "1.72x", "2.06x", "2.47x"];
 const RARE_MULTIPLIERS = ["2.96x", "3.55x", "4.26x", "5.11x"];
 const RARE_CHANCE = 1 / 15; // Approx 1 in 15 will be rare
 
+// --- Difficulty Multipliers ---
+const difficultyMultipliers = {
+    Easy: ['1.03x', '1.07x'],
+    Medium: ['1.12x', '1.28x'],
+    Hard: ['1.23x', '1.55x'],
+    Hardcore: ['1.63x', '2.80x'],
+};
 
 // --- Component Props Interface ---
 interface PredictorPageProps {
@@ -41,6 +48,8 @@ const PredictorPage: React.FC<PredictorPageProps> = ({ user, onUpdateUser }) => 
     const difficulties = ['Easy', 'Medium', 'Hard', 'Hardcore'];
     const predictionsUsed = user.predictionCount;
     const predictionsLeft = PREDICTION_LIMIT - predictionsUsed;
+    
+    const currentMultipliers = difficultyMultipliers[difficulty as keyof typeof difficultyMultipliers];
 
     useEffect(() => {
         document.body.classList.add('game-mode');
@@ -161,10 +170,10 @@ const PredictorPage: React.FC<PredictorPageProps> = ({ user, onUpdateUser }) => 
                     <div className="vertical-divider" style={{ left: '66.67%' }}></div>
                     
                     <div className="multiplier-circle" style={{ top: '18vh', left: '50%', transform: 'translateX(-50%)' }}>
-                        1.03x
+                        {currentMultipliers[0]}
                     </div>
                     <div className="multiplier-circle" style={{ top: '18vh', left: '83.33%', transform: 'translateX(-50%)' }}>
-                        1.07x
+                        {currentMultipliers[1]}
                     </div>
                     
                     <div className="wall-vent" style={{ bottom: '40px', left: '50%', transform: 'translateX(-50%)' }}></div>
