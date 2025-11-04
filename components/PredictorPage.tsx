@@ -9,10 +9,34 @@ const PREDICTION_LIMIT = 15;
 // @ts-ignore - VITE_AFFILIATE_LINK is injected by the build process
 const AFFILIATE_LINK = import.meta.env.VITE_AFFILIATE_LINK || 'https://1waff.com/?p=YOUR_CODE_HERE';
 
-// --- Prediction Values ---
-const COMMON_MULTIPLIERS = ["1.20x", "1.44x", "1.72x", "2.06x", "2.47x"];
-const RARE_MULTIPLIERS = ["2.96x", "3.55x", "4.26x", "5.11x"];
-const RARE_CHANCE = 1 / 15; // Approx 1 in 15 will be rare
+// --- Prediction Data with Steps ---
+interface PredictionData {
+    value: string;
+    steps: number;
+}
+
+const predictionDataByDifficulty: { [key: string]: PredictionData[] } = {
+    Easy: [
+        { value: "1.03x", steps: 1 }, { value: "1.07x", steps: 2 }, { value: "1.12x", steps: 3 },
+        { value: "1.17x", steps: 4 }, { value: "1.23x", steps: 5 }, { value: "1.29x", steps: 6 },
+        { value: "1.36x", steps: 7 }, { value: "1.44x", steps: 8 }, { value: "1.53x", steps: 9 },
+        { value: "1.63x", steps: 10 }, { value: "1.75x", steps: 11 }
+    ],
+    Medium: [
+        { value: "1.12x", steps: 1 }, { value: "1.28x", steps: 2 }, { value: "1.47x", steps: 3 },
+        { value: "1.70x", steps: 4 }, { value: "1.98x", steps: 5 }, { value: "2.33x", steps: 6 },
+        { value: "2.76x", steps: 7 }
+    ],
+    Hard: [
+        { value: "1.23x", steps: 1 }, { value: "1.55x", steps: 2 }, { value: "1.98x", steps: 3 },
+        { value: "2.56x", steps: 4 }, { value: "3.36x", steps: 5 }, { value: "4.49x", steps: 6 }
+    ],
+    Hardcore: [
+        { value: "1.63x", steps: 1 }, { value: "2.80x", steps: 2 }, { value: "4.95x", steps: 3 },
+        { value: "9.08x", steps: 4 }
+    ],
+};
+
 
 // --- Decorative Multiplier Values based on Difficulty ---
 const difficultyMultipliers: { [key: string]: string[] } = {
@@ -31,7 +55,7 @@ interface PredictorPageProps {
 // --- Component ---
 const PredictorPage: React.FC<PredictorPageProps> = ({ user, onUpdateUser }) => {
     const [isGenerating, setIsGenerating] = useState(false);
-    const [prediction, setPrediction] = useState<{ value: string; accuracy: number } | null>(null);
+    const [prediction, setPrediction] = useState<{ value: string; accuracy: number; steps: number } | null>(null);
     const [lastPredictionValue, setLastPredictionValue] = useState<string | null>(null);
     const [difficulty, setDifficulty] = useState('Easy');
     const [isDifficultyOpen, setIsDifficultyOpen] = useState(false);
@@ -87,20 +111,23 @@ const PredictorPage: React.FC<PredictorPageProps> = ({ user, onUpdateUser }) => 
         }
 
         setTimeout(() => {
-            const isRare = Math.random() < RARE_CHANCE;
-            const multipliers = isRare ? RARE_MULTIPLIERS : COMMON_MULTIPLIERS;
+            const predictionOptions = predictionDataByDifficulty[difficulty] || predictionDataByDifficulty.Easy;
             
-            let value;
+            let selectedPrediction: PredictionData;
             do {
-                value = multipliers[Math.floor(Math.random() * multipliers.length)];
-            } while (multipliers.length > 1 && value === lastPredictionValue);
+                selectedPrediction = predictionOptions[Math.floor(Math.random() * predictionOptions.length)];
+            } while (predictionOptions.length > 1 && selectedPrediction.value === lastPredictionValue);
             
             const minAccuracy = 70;
             const maxAccuracy = 99;
             const accuracy = Math.floor(Math.random() * (maxAccuracy - minAccuracy + 1)) + minAccuracy;
 
-            setPrediction({ value, accuracy });
-            setLastPredictionValue(value);
+            setPrediction({ 
+                value: selectedPrediction.value, 
+                accuracy, 
+                steps: selectedPrediction.steps 
+            });
+            setLastPredictionValue(selectedPrediction.value);
             onUpdateUser({ ...user, predictionCount: user.predictionCount + 1 });
             
             setIsGenerating(false);
@@ -206,7 +233,7 @@ const PredictorPage: React.FC<PredictorPageProps> = ({ user, onUpdateUser }) => 
                 <div className="control-panel">
                     <div className="panel-row">
                         <div className="panel-item">Accuracy - {prediction ? `${prediction.accuracy}%` : ''}</div>
-                        <div className="panel-item">Steps -</div>
+                        <div className="panel-item">Steps - {prediction ? prediction.steps : ''}</div>
                     </div>
                     <div className="panel-row">
                         <div className="panel-item full-width" style={{flexGrow: 2.5}}>Cashout before this value 👉</div>
