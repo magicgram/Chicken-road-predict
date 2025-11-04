@@ -164,7 +164,7 @@ const PredictorPage: React.FC<PredictorPageProps> = ({ user, onUpdateUser }) => 
                         1.03x
                     </div>
                     <div className="multiplier-circle" style={{ top: '18vh', left: '83.33%', transform: 'translateX(-50%)' }}>
-                        1.03x
+                        1.07x
                     </div>
                     
                     <div className="wall-vent" style={{ bottom: '40px', left: '50%', transform: 'translateX(-50%)' }}></div>
