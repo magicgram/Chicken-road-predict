@@ -255,17 +255,23 @@
                 radial-gradient(ellipse at 10% 90%, rgba(20, 23, 38, 0.4), transparent 50%);
         }
         
-        .game-arch {
+        .dark-arch-background {
             position: absolute;
-            bottom: 10px; /* Floor height */
-            height: calc(100% - 10px);
-            width: 40vw;
-            max-width: 160px;
-            border-left: 1px solid rgba(253, 224, 71, 0.12);
-            border-right: 1px solid rgba(253, 224, 71, 0.12);
-            border-top: 1px solid rgba(253, 224, 71, 0.12);
-            border-radius: 80px 80px 0 0;
-            box-shadow: 0 0 30px rgba(253, 224, 71, 0.05);
+            bottom: 10px; /* Aligns with floor top */
+            width: 30vw;
+            max-width: 240px;
+            height: 55vh;
+            background-color: #141726; /* A very dark, near-black color */
+            border-radius: 120px 120px 0 0;
+        }
+
+        .vertical-divider {
+            position: absolute;
+            top: 0;
+            bottom: 10px; /* Stops at the floor */
+            width: 1px;
+            background: linear-gradient(to bottom, transparent, rgba(253, 224, 71, 0.3) 50%, transparent);
+            box-shadow: 0 0 6px rgba(253, 224, 71, 0.15);
         }
         
         .wall-vent {
