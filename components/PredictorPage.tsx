@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect, useRef } from 'react';
 import type { User } from '../types';
 import { useTranslations } from '../hooks/useTranslations';
@@ -157,10 +158,10 @@ const PredictorPage: React.FC<PredictorPageProps> = ({ user, onUpdateUser }) => 
                     <div className="game-arch" style={{ left: '75vw', transform: 'translateX(-50%)' }}></div>
 
                     {/* --- MULTIPLIER CIRCLES --- */}
-                    <div className="multiplier-circle" style={{ top: '22vh', left: '25vw', transform: 'translateX(-50%)' }}>
+                    <div className="multiplier-circle" style={{ top: '18vh', left: '25vw', transform: 'translateX(-50%)' }}>
                         1.03x
                     </div>
-                    <div className="multiplier-circle" style={{ top: '22vh', left: '75vw', transform: 'translateX(-50%)' }}>
+                    <div className="multiplier-circle" style={{ top: '18vh', left: '75vw', transform: 'translateX(-50%)' }}>
                         1.03x
                     </div>
 
