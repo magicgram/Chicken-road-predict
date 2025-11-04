@@ -157,8 +157,8 @@ const PredictorPage: React.FC<PredictorPageProps> = ({ user, onUpdateUser }) => 
                     <div className="vertical-divider" style={{ left: '33.33%' }}></div>
                     <div className="vertical-divider" style={{ left: '66.67%' }}></div>
                     
-                    {/* Decorative Multipliers - Shown only in idle state */}
-                    {!isGenerating && !prediction && (
+                    {/* Decorative Multipliers - Shown until a prediction result is displayed */}
+                    {!prediction && (
                         <>
                            <div className="static-multiplier-container" style={{ left: '50%' }}>
                                 <div className="static-multiplier-circle">1.03X</div>
